@@ -1,0 +1,12 @@
+{
+  "flintlock_pistol_1": {
+    "sounds": [
+      "flintlockweapons:flintlock_pistol_sound_1"
+    ]
+  },
+  "flintlock_pistol_2" : {
+    "sounds" : [
+      "flintlockweapons:flintlock_pistol_sound_2"
+    ]
+  }
+}

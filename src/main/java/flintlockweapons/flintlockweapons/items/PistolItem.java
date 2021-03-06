@@ -1,5 +1,6 @@
 package flintlockweapons.flintlockweapons.items;
 
+import flintlockweapons.flintlockweapons.Flintlockweapons;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -8,11 +9,10 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -21,15 +21,29 @@ import java.util.function.Predicate;
 
 public class PistolItem extends RangedWeaponItem implements Vanishable {
 
-
+    Random random = new Random();
     public static final float RANGE = 1.1F;
-
+    public static final float VOLUME = .55F;
     public PistolItem(Settings settings) {
         super(settings);
     }
+    @Override
+    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+        return use(user.getEntityWorld(), user, hand).getResult();
 
+    }
+
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        return use(context.getWorld(), context.getPlayer(), context.getHand()).getResult();
+    }
+    @Override
+    public boolean isUsedOnRelease(ItemStack stack) {
+        return stack.getItem() == ItemInitializer.flintlockPistolItem;
+    }
     public ItemStack getMusketBall(LivingEntity user)
     {
+
         PlayerEntity playerEntity = (PlayerEntity) user;
         for(int i = 0; i < playerEntity.inventory.size(); i++)
         {
@@ -84,7 +98,10 @@ public class PistolItem extends RangedWeaponItem implements Vanishable {
                     world.spawnEntity(persistentProjectileEntity);
                 }
 
-                world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (RANDOM.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                if(random.nextBoolean())
+                    world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), Flintlockweapons.pistol1, SoundCategory.PLAYERS, VOLUME, 1.0F / (RANDOM.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                else
+                    world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), Flintlockweapons.pistol2, SoundCategory.PLAYERS, VOLUME, 1.0F / (RANDOM.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
 
                 playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
@@ -159,13 +176,12 @@ public class PistolItem extends RangedWeaponItem implements Vanishable {
 
 
         ItemStack itemStack = user.getStackInHand(hand);
-        boolean bl = !user.getArrowType(itemStack).isEmpty();
+        boolean bl = !getMusketBall(user).isEmpty();
         if(this.isCharged(itemStack))
         {
             fireArrow(itemStack, world, user, 0, 1.0F);
             this.setCharged(itemStack, false);
 
-            itemStack.setDamage(0);
         }
         if (!user.abilities.creativeMode && !bl) {
             return TypedActionResult.fail(itemStack);

@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.Potion;
@@ -47,38 +48,32 @@ import java.util.Set;
 public class MusketBallEntity extends PersistentProjectileEntity {
 
     float damage = 8;
-    private SoundEvent sound = SoundEvents.BLOCK_ANVIL_HIT;
+    private SoundEvent mySound = SoundEvents.BLOCK_GRAVEL_HIT;
 
     public MusketBallEntity(EntityType<? extends MusketBallEntity > entityType, World world) {
             super(entityType, world);
         }
 
    public MusketBallEntity(World world, double x, double y, double z) {
-            super(EntityType.ARROW, x, y, z, world);
+            super(Flintlockweapons.MUSKET_BALL, x, y, z, world);
         }
 
    public MusketBallEntity(World world, LivingEntity owner) {
-            super(EntityType.ARROW, owner, world);
+            super(Flintlockweapons.MUSKET_BALL, owner, world);
         }
 
         public MusketBallEntity(World world) {
-            super(EntityType.ARROW, world);
+            super(Flintlockweapons.MUSKET_BALL, world);
         }
 
+    @Override
+    public Packet<?> createSpawnPacket()
+    {
+        return EntityPacketUtils.createPacket(this);
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-        protected void initDataTracker() {
+    protected void initDataTracker() {
             super.initDataTracker();
         }
 
@@ -127,6 +122,15 @@ public class MusketBallEntity extends PersistentProjectileEntity {
                 return new ItemStack(ItemInitializer.musketBallItem);
 
         }
+        @Override
+        protected SoundEvent getHitSound() {
+        return SoundEvents.BLOCK_GRAVEL_HIT;
+    }
+
+
+
+
+
 
         @Environment(EnvType.CLIENT)
         public void handleStatus(byte status) {
@@ -198,7 +202,7 @@ public class MusketBallEntity extends PersistentProjectileEntity {
                 }
             }
 
-            this.playSound(this.sound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+            this.playSound(this.mySound, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
             if (this.getPierceLevel() <= 0) {
                 this.remove();
             }

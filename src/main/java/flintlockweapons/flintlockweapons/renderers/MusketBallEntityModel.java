@@ -15,7 +15,7 @@ public class MusketBallEntityModel extends EntityModel<MusketBallEntity> {
         textureHeight = 2;
         textureWidth = 4;
         base = new ModelPart(this, 0, 0);
-
+        //base.addCuboid(-6f, -6f, -6f, 1, 1, 1);
         base.addCuboid(-0.5f,4f, -0.5f, 1, 1, 1);
     }
 
@@ -29,7 +29,7 @@ public class MusketBallEntityModel extends EntityModel<MusketBallEntity> {
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green,
                        float blue, float alpha) {
-        matrices.translate(0, 1.25, 0);
+        matrices.translate(0, -.25, 0);
         // render cube
         base.render(matrices, vertices, light, overlay);
 

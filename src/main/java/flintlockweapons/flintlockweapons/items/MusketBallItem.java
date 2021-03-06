@@ -9,7 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class MusketBallItem extends ArrowItem {
+public class MusketBallItem extends Item {
+
     public MusketBallItem(Settings settings) {
         super(settings);
     }
