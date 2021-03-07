@@ -1,6 +1,7 @@
 package flintlockweapons.flintlockweapons.items;
 
 import flintlockweapons.flintlockweapons.Flintlockweapons;
+import flintlockweapons.flintlockweapons.items.ammo.MusketBallItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -9,14 +10,12 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import java.util.Random;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class PistolItem extends RangedWeaponItem implements Vanishable {
@@ -37,10 +36,11 @@ public class PistolItem extends RangedWeaponItem implements Vanishable {
     public ActionResult useOnBlock(ItemUsageContext context) {
         return use(context.getWorld(), context.getPlayer(), context.getHand()).getResult();
     }
+    /*
     @Override
     public boolean isUsedOnRelease(ItemStack stack) {
         return stack.getItem() == ItemInitializer.flintlockPistolItem;
-    }
+    }*/
     public ItemStack getMusketBall(LivingEntity user)
     {
 
@@ -98,7 +98,7 @@ public class PistolItem extends RangedWeaponItem implements Vanishable {
                     world.spawnEntity(persistentProjectileEntity);
                 }
 
-                if(random.nextBoolean())
+                if(RANDOM.nextBoolean())
                     world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), Flintlockweapons.pistol1, SoundCategory.PLAYERS, VOLUME, 1.0F / (RANDOM.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                 else
                     world.playSound((PlayerEntity) null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), Flintlockweapons.pistol2, SoundCategory.PLAYERS, VOLUME, 1.0F / (RANDOM.nextFloat() * 0.4F + 1.2F) + f * 0.5F);

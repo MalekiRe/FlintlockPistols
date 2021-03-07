@@ -1,11 +1,8 @@
 package flintlockweapons.flintlockweapons.entities;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import flintlockweapons.flintlockweapons.Flintlockweapons;
+import flintlockweapons.flintlockweapons.entities.ammo.AmmoEntity;
 import flintlockweapons.flintlockweapons.items.ItemInitializer;
-import flintlockweapons.flintlockweapons.items.MusketBallItem;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
@@ -14,38 +11,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtil;
-import net.minecraft.potion.Potions;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
 
-public class MusketBallEntity extends PersistentProjectileEntity {
+public class MusketBallEntity extends AmmoEntity {
 
     float damage = 8;
     private SoundEvent mySound = SoundEvents.BLOCK_GRAVEL_HIT;

@@ -8,5 +8,10 @@
     "sounds" : [
       "flintlockweapons:flintlock_pistol_sound_2"
     ]
+  },
+  "gun_load": {
+    "sounds" : [
+      "flintlockweapons:gun_load"
+    ]
   }
 }
