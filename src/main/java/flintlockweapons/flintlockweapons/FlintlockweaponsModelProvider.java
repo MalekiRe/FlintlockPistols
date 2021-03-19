@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 public class FlintlockweaponsModelProvider {
     private static void registerBowModels() {
 
-        FabricModelPredicateProviderRegistry.register(ItemInitializer.flintLockPistolItem, new Identifier("ammo_loaded"), (itemStack, clientWorld, livingEntity) -> {
+        FabricModelPredicateProviderRegistry.register(ItemInitializer.flintLockPistolItem, new Identifier("loaded"), (itemStack, clientWorld, livingEntity) -> {
             if (livingEntity == null) {
                 return 0.0F;
             }

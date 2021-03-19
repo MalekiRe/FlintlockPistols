@@ -19,7 +19,7 @@ import java.util.UUID;
 public class FlintlockweaponsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        System.out.println("HEHEHEHEHEHHEEHEHEHHEHEHEHEHHEHE");
+
         FlintlockweaponsModelProvider.registerModels();
 
         EntityRendererRegistry.INSTANCE.register(Flintlockweapons.MUSKET_BALL, (dispatcher, context) -> {

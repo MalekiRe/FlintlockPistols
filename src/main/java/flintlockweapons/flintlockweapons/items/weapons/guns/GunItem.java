@@ -38,11 +38,12 @@ public class GunItem extends RangedWeaponItem implements Vanishable {
     public float hitVolume = 1.0F;
     public int bulletAmount = 1;
     public float bulletSpread = 0;
+    public int loadTime;
     public AmmoItem[] ammo;
     public Identifier[] fireSoundNames;
     public Identifier[] hitSoundNames;
     public Identifier[] loadSoundNames;
-    public GunItem(Settings settings, AmmoItem[] ammo, int bulletAmount, float bulletSpread, float range, float damage, float damageVariance, Identifier[] fireSoundNames, Identifier[] hitSoundNames, Identifier[] loadSoundNames) {
+    public GunItem(Settings settings, AmmoItem[] ammo,int loadTime,  int bulletAmount, float bulletSpread, float range, float damage, float damageVariance, Identifier[] fireSoundNames, Identifier[] hitSoundNames, Identifier[] loadSoundNames) {
         super(settings);
         this.range = range;
         this.damage = damage;
@@ -53,11 +54,11 @@ public class GunItem extends RangedWeaponItem implements Vanishable {
         this.loadSoundNames = loadSoundNames;
         this.bulletAmount = bulletAmount;
         this.bulletSpread = bulletSpread;
-
+        this.loadTime = loadTime;
 
     }
     public boolean getIsCriticalHit() {
-        return RANDOM.nextBoolean();
+        return false;
     }
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
@@ -65,7 +66,9 @@ public class GunItem extends RangedWeaponItem implements Vanishable {
 
         if(isLoaded(itemStack))
         {
-            fireAmmo(itemStack, world, user, getAmmo(itemStack));
+            for(int i = 0; i < bulletAmount; i++) {
+                fireAmmo(itemStack, world, user, getAmmo(itemStack));
+            }
             setLoaded(itemStack, false);
         }
         if (!user.abilities.creativeMode && !hasArrayAmmoInInventory(user.inventory, ammo)) {
@@ -90,7 +93,10 @@ public class GunItem extends RangedWeaponItem implements Vanishable {
             if(!ammoStack.isEmpty() || isCreative)
                 if (!world.isClient) {
                     PersistentProjectileEntity persistentProjectileEntity = ammoToUse.createProjectile(world, playerEntity);
-                    persistentProjectileEntity.setProperties(playerEntity, playerEntity.pitch, playerEntity.yaw, 0.0F, range, RANDOM.nextFloat()*bulletSpread);
+                    if(bulletAmount > 1)
+                        persistentProjectileEntity.setProperties(playerEntity, playerEntity.pitch, playerEntity.yaw, 0.0F, range*(RANDOM.nextInt((int) (bulletSpread+2))/(bulletSpread+1)), RANDOM.nextFloat()*bulletSpread*2);
+                    else
+                        persistentProjectileEntity.setProperties(playerEntity, playerEntity.pitch, playerEntity.yaw, 0.0F, range, 0);
                     persistentProjectileEntity.setCritical(getIsCriticalHit());
                     persistentProjectileEntity.setDamage(damage);
 

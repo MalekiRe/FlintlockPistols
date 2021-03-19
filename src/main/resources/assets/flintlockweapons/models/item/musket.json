@@ -1,6 +1,13 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "flintlockweapons:items/flintlock_pistol"
-  }
+    "layer0": "flintlockweapons:items/musket"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "loaded": 1
+      },
+      "model": "flintlockweapons:item/musket_loaded"
+    }]
 }

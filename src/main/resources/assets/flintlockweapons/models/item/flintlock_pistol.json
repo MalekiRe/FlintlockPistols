@@ -1,14 +1,14 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "flintlockweapons:items/flintlock_pistol"
+    "layer0": "flintlockweapons:items/flintlock"
   },
   "overrides": [
   {
     "predicate": {
-      "charged": 1
+      "loaded": 1
     },
-    "model": "flintlockweapons:item/flintlock_pistol_loaded"
+    "model": "flintlockweapons:item/flintlock_loaded"
   }]
 
 }
