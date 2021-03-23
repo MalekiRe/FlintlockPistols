@@ -3,10 +3,9 @@ package flintlockweapons.flintlockweapons.items;
 import flintlockweapons.flintlockweapons.items.ammo.AmmoItem;
 import flintlockweapons.flintlockweapons.items.ammo.MusketBallItem;
 import flintlockweapons.flintlockweapons.items.weapons.guns.GunItem;
+import flintlockweapons.flintlockweapons.items.weapons.guns.GunMelee;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.*;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import org.lwjgl.system.CallbackI;
@@ -20,7 +19,10 @@ public class ItemInitializer {
     public static String[] itemNames = {"cartridge", "gun_barrel"};
 
     public static MusketBallItem musketBallItem = new MusketBallItem(new FabricItemSettings().group(ItemGroup.MISC));
-    //public static PistolItem flintlockPistolItem = new PistolItem(new FabricItemSettings().group(ItemGroup.MISC).maxDamage(100));
+
+    public static ToolItem PIKE_ITEM = new SwordItem(PikeMaterial.INSTANCE, 3, 0.3F, new FabricItemSettings().group(ItemGroup.COMBAT));
+
+
     static Identifier pistolLoad1 = new Identifier(MOD_ID, "flintlock_pistol_1");
     static Identifier pistolLoad2 = new Identifier(MOD_ID, "flintlock_pistol_2");
     static Identifier[] gunFireNoises = {pistolLoad1, pistolLoad2};
@@ -40,6 +42,9 @@ public class ItemInitializer {
     public static GunItem musketItem = new GunItem(new FabricItemSettings().group(ItemGroup.MISC).maxDamage(100),
             gunAmmo, 120, 1, 0, 10F, 12, 0,
             gunFireNoises, bulletHitNoise, loadGunNoises);
+    public static GunMelee musketWithBayonetItem = new GunMelee(new FabricItemSettings().group(ItemGroup.MISC).maxDamage(100),
+            gunAmmo, 120, 1, 0, 10F, 12, 0,
+            gunFireNoises, bulletHitNoise, loadGunNoises, 4F, 4F, ToolMaterials.IRON);
 
     public static ArrayList<ItemHelper> items = new ArrayList<ItemHelper>();
     public static void init()
@@ -47,6 +52,8 @@ public class ItemInitializer {
         items.add(new ItemHelper(flintLockPistolItem, "flintlock_pistol"));
         items.add(new ItemHelper(blunderbussItem, "blunderbuss"));
         items.add(new ItemHelper(musketItem, "musket"));
+        items.add(new ItemHelper(musketWithBayonetItem, "musket_with_bayonet"));
+        items.add(new ItemHelper(PIKE_ITEM, "pike"));
         for(String s : itemNames)
         {
             items.add(new ItemHelper(new Item(new FabricItemSettings().group(ItemGroup.MISC)), s));
